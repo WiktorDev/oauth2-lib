@@ -19,7 +19,5 @@ class NodeAuth{
         return auth.getUser(this.type, token, tokenID)
     }
 }
-function Type(){
-    return AuthType;
-}
+
 module.exports = { NodeAuth, Platform }
