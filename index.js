@@ -1,4 +1,4 @@
-const AuthType = require('./enums/AuthType').AuthType
+const Platform = require('./enums/AuthType').AuthType
 const auth = require("./utils/AuthUtil");
 
 class NodeAuth{
@@ -22,4 +22,4 @@ class NodeAuth{
 function Type(){
     return AuthType;
 }
-module.exports = { NodeAuth, Type }
+module.exports = { NodeAuth, Platform }

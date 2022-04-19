@@ -1,16 +1,25 @@
 {
   "name": "oauth2-lib",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "NodeJS Oauth2 lib",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["Oauth2","google","discord","github","auth","authorization","lib"],
+  "keywords": [
+    "Oauth2",
+    "google",
+    "discord",
+    "github",
+    "auth",
+    "authorization",
+    "lib"
+  ],
   "author": "wiktor#8880",
   "website": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.26.1"
+    "axios": "^0.26.1",
+    "qs": "^6.10.3"
   }
 }
