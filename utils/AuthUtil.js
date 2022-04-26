@@ -1,16 +1,16 @@
-const AuthType = require('../enums/AuthType').AuthType
+const Platform = require('../enums/Platform').Platform
 const axios = require('axios');
 const qs = require('qs')
 const cfg = require('./urls');
 
 exports.loginURL=(type, clientID, redirect_uri, scope)=>{
     switch (type){
-        case AuthType.DISCORD:
+        case Platform.DISCORD:
             return `${cfg.DISCORD_LOGIN}?client_id=${clientID}&redirect_uri=${redirect_uri}&response_type=code&scope=${scope.join(" ")}`;
-        case AuthType.GOOGLE:
+        case Platform.GOOGLE:
             let options = { redirect_uri: redirect_uri, client_id: clientID, access_type: 'offline', response_type: 'code', prompt: 'consent', scope: scope.join(" ") }
             return `${cfg.GOOGLE_LOGIN}?${qs.stringify(options)}`;
-        case AuthType.GITHUB:
+        case Platform.GITHUB:
             return `${cfg.GITHUB_LOGIN}?client_id=${clientID}&redirect_uri=${redirect_uri}&scope=${scope.join(" ")}`
         default:
             return "Invalid auth type!";
@@ -19,13 +19,13 @@ exports.loginURL=(type, clientID, redirect_uri, scope)=>{
 
 exports.getTokens=async(type, clientID, client_secret, redirect_uri, scope, code)=>{
     switch (type){
-        case AuthType.DISCORD:
+        case Platform.DISCORD:
             var data = { client_id: clientID, client_secret: client_secret, grant_type: 'authorization_code', code: code, redirect_uri: redirect_uri, scope: scope.join(" ") };
             return await doRequest({ method: 'post', url: cfg.DISCORD_TOKEN, data: qs.stringify(data) })
-        case AuthType.GOOGLE:
+        case Platform.GOOGLE:
             var data = { code, client_id: clientID, client_secret: client_secret,  redirect_uri: redirect_uri, grant_type: 'authorization_code' }
             return await doRequest({ method: 'post', url: cfg.GOOGLE_TOKEN, data: qs.stringify(data) })
-        case AuthType.GITHUB:
+        case Platform.GITHUB:
             var data = { client_id: clientID, client_secret: client_secret, code: code, redirect_uri: redirect_uri }
             return await doRequest({ method: 'post', url: cfg.GITHUB_TOKEN, data: qs.stringify(data) })
         default:
@@ -35,11 +35,11 @@ exports.getTokens=async(type, clientID, client_secret, redirect_uri, scope, code
 
 exports.getUser=async(type, token, tokenID)=>{
     switch (type){
-        case AuthType.DISCORD:
+        case Platform.DISCORD:
             return await doRequest({ method: 'get', url: cfg.DISCORD_USER, headers: {Authorization: `Bearer ${token}`}})
-        case AuthType.GOOGLE:
+        case Platform.GOOGLE:
             return await doRequest({ method: 'get', url: `${cfg.GOOGLE_USER}?alt=json&access_token=${token}`, headers: {Authorization: `Bearer ${tokenID}`}})
-        case AuthType.GITHUB:
+        case Platform.GITHUB:
             return await doRequest({ method: 'get', url: cfg.GITHUB_USER, headers: {'Content-Type': 'application/json', Authorization: `Bearer ${token}`}})
         default:
             return "Invalid auth type!";

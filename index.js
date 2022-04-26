@@ -1,4 +1,4 @@
-const Platform = require('./enums/AuthType').AuthType
+const Platform = require('./enums/Platform').Platform
 const auth = require("./utils/AuthUtil");
 
 class NodeAuth{
